@@ -38,6 +38,12 @@ Live Dashboard: https://vhvxeyh7ytfk3spmpzdwej.streamlit.app/
 **Lag Correlation Chart**
 **Proxy Comparison Chart**
 
+| # | Title                     | Type                     | Notes                        |
+|---|---------------------------|--------------------------|------------------------------|
+| 1 | Time Series (All Stocks)  | Histogram + box plot     |                              |
+| 2 | Lag Correlation Chart     | Bar + std dev error bars |                              |
+| 3 | Proxy Comparison Chart    | Two-panel bar            |                              |
+
 -------
 
 ## How to Run
