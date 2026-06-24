@@ -82,7 +82,7 @@ st.subheader("Does Online Interest Correlate with Market Movements?")
 st.markdown("""
 Preliminary signal screening analysis. Output: go, investigate, no-go per stock.
 *Illustrative business context only. Not investment advice.*
-*(Use the sidebar controls (left) to explore different stocks.)*
+\n*(Use the sidebar controls (left) to explore different stocks.)*
 """)
 
 #Top Metrics Row 
