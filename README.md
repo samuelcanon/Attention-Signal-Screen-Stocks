@@ -3,20 +3,35 @@
 
 Live Dashboard: https://vhvxeyh7ytfk3spmpzdwej.streamlit.app/
 
-**Business Context:** 
+## Business Context: 
 
-**Methodology** 
-***thjhfhggfh***
+## Methodology
+**Three Independent Data Sources**
+**Alignment**
+**Returns (Not Prices)**
+**Pre-Registered Lag 1 Test**
 
-##Deliverate Scope Decisions 
+## Statistics
 
-##Statistical Methods
+## Key Findings
 
-##Charts
+## Stock Specific Notes
+**TSLA**
+**NVDA**
+**JPM**
+**META**
 
-##How to Run
+## Charts
+**Time Series (All Stocks)**
+**Lag Correlation Chart**
+**Proxy Comparison Chart**
 
-##Outputs 
+## How to Run
+**Notebook**
 
-##Limitations
+**Dashboard**
+
+## Limitations
+
+## Disclaimer 
 
