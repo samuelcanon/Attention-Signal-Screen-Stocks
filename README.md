@@ -1,11 +1,12 @@
-#Correlation Analysis 
-##Summary 
+# Correlation Analysis 
+**Overview**
 
-Streamlit URL: https://vhvxeyh7ytfk3spmpzdwej.streamlit.app/
+Live Dashboard: https://vhvxeyh7ytfk3spmpzdwej.streamlit.app/
 
-##Key Findings: 
+**Business Context:** 
 
-##Dataset Descriptions 
+**Methodology** 
+***r***
 
 ##Deliverate Scope Decisions 
 
