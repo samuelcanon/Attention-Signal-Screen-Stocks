@@ -47,12 +47,15 @@ These thresholds are a business action bar, not a statistical convention. They a
 Note: Two attention sources are used deliberately to gain a more complete and credible result than a single source provides.
 
 **Alignment**
+
 All sources were placed on one weekly Friday anchored calendar (Friday close for prices, summed weekly totals for Wiki Views, re-anchored weekly values for Trends) and combined with an inner join. One trailing partial week was dropped. Final dataset: 155 weeks (0.6% observations lost in the join).
 
 **Returns (Not Prices)**
+
 Stock prices were converted to weekly percent returns before any correlation. Raw prices trend upwards and two upward trending series look correlated even when unrelated, reflecting spurious correlation. Returns strip the trend and isolate genuine week to week movement.
 
 **Pre-Registered Lag 1 Test**
+
 A lag shifts attention backward in time to line up against a later week's return. Lag 1 was locked as the primary test before results were seen. This prevents data dredging (reporting the best one, manufactures findings from noise). Lag 0-4 are computed and shown for exploratory context.
 
 -------
