@@ -28,13 +28,26 @@ These thresholds are a business action bar, not a statistical convention. They a
 
 ## Key Findings
 
+All eight pre-registered lag one tests landed below the 0.20 threshold (no-go tier).
+
+| Stock  | Google Trends (lag 1)   | Wikipedia (lag 1) |
+|----------------------------------|-------------------|
+| TSLA   | +0.0153                 | -0.1343           |
+| NVDA   | -0.0015                 | +0.0480           |
+| META   | +0.0913                 | -0.1599           |
+|JPM     | -0.0375                 | +0.0131           |
+
+Null Result: Both Google Trends and Wikipedia page views do not show a consistent lead relationship with weekly price movements for the four stocks analysed over this period (Jan 2022-Dec 2024). All correlation coefficients at the pre-registered lag fall below the threshold. 
+
+Note: Two lag two results crossed the 0.20 threshold (TSLA-Wiki -0.2413 and JPM-Wiki +0.2013). 
+
 -------
 
 ## Stock Specific Notes
-**TSLA**
-**NVDA**
-**JPM**
-**META**
+**TSLA:** Common Elon Musk news driven spikes tend to produce same week co-movement rather than a one week lead. The confound is timing not the source of searches. 
+**NVDA:** Search volume and returns have been driven in part by the AI narrative, in cases this is a shared external drvier producing same week co-movements rather than a lead.
+**JPM:** The weak result is expected form an institutionally traded company and confirms the projects hypothesis.
+**META:** No single external noise source on the scale of its peers, so adding a comparable caveat would be unwarranted.
 
 -------
 
@@ -67,11 +80,11 @@ Pearson r is the primary metric with Spearman r as a robustness check (a gap ove
 -------
 ## Charts
 
-| # | Title                     | Type                     | Notes                        |
-|---|---------------------------|--------------------------|------------------------------|
-| 1 | Time Series (All Stocks)  | Dual-axis line chart    | Search volume Vs. Weekly Return per stock. If search led price, spikes would precede return spikes.                            |
-| 2 | Lag Correlation Chart     | Line chart | Correlation by lag (0-4) for both proxies. If attention led price, a line would clear the 0.20 threshold at lag 1 or beyond |
-| 3 | Proxy Comparison Chart    | Bar chart           | The two attention sources at lag 0. Wiki is 'stronger' than Trends for three of four stocks, but stronger means less week and neither source clear the threshold|
+| # | Title                     | Type                 | Notes                                     |
+|---|---------------------------|----------------------|-------------------------------------------|
+| 1 | Time Series (All Stocks)  | Dual-axis line chart | Search volume Vs. Weekly Return per stock. If search led price, spikes would precede return spikes.                                           |
+| 2 | Lag Correlation Chart     | Line chart           | Correlation by lag (0-4) for both proxies. If attention led price, a line would clear the 0.20 threshold at lag 1 or beyond                   |
+| 3 | Proxy Comparison Chart    | Bar chart            | The two attention sources at lag 0. Wiki is 'stronger' than Trends for three of four stocks, but stronger means less week and neither source clear the threshold                                                                                |
 
 -------
 ## Outputs
@@ -80,21 +93,33 @@ Pre-run outputs are in /outputs so you can review result without running the not
  
 | File                    | Contents                                               |
 |-------------------------|--------------------------------------------------------|
-| data_aligned.csv        | 155 week aligned dataset (Jan 2022–Dec 2024) per stock, weekly return, Google Trends volume, Wikipedia views, and lagged attention columns. |
-| findings.csv            | 8 rows (4 stocks × 2 proxies) pre-registered lag-1 correlation, lags, and the go/investigate/no-go recommendation per test.         |
+| data_aligned.csv        | 155 week aligned dataset (Jan 2022–Dec 2024) per stock, weekly return, Google Trends volume, Wikipedia views, and lagged attention columns.               |
+| findings.csv            | 8 rows (4 stocks × 2 proxies) pre-registered lag-1 correlation, lags, and the go/investigate/no-go recommendation per test.                              |
 
 -------
 
 ## How to Run
 **Notebook**
 
+Open notebook.ipynb in Google Colab or Jupyter and run top to bottom. The data-collection cells call live APIs (Google Trends, Yahoo Finance, Wikimedia), these can be rate-limited, so the raw pulls are saved to CSV and treated as canonical. Use the dataset provided in this project to ensure consistency and reproducibility, as Google Trends normalized index values which can very slightly between API calls.
+
 **Dashboard**
+
+Runs locally with no live API calls (it reads the pre-exported CSVs):
+- pip install -r requirements.txt
+- streamlit run dashboard.py
+
+Place data_aligned.csv and findings.csv in the same folder as dashboard.py. The dashboard recomputes correlations based on the selected date range, so narrowing the range may change the displayed values.
 
 -------
 
 ## Limitations
 
+- Weekly Granularity:
+- One Three Year Window:
+- No Macro Controls:
+- 
 -------
 
 ## Disclaimer 
-
+*This project is for educational and portfolio purposes only. The business context is illustrative and should not be interpreted as investment advice.* 
