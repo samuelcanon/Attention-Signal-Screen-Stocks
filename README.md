@@ -18,9 +18,9 @@ This is a correlation and lag analysis study.
 The project is framed as a screening exercise for an investment advisory firm asking a practical question: before spending money building a tool around online trends/attention, is there a signal worth chasing?
 
 The ouput is a tiered recommendation per stock per source: 
-- no-go  |  r < 0.20   (Not worth pursuing. Explains under 4% of return movement.)
-- investigate  |  0.20 <= r < 0.40  (Worth a closer look.)
-- go  |  r >= 0.40  (Strong enough to build on.)
+- no-go    |    r < 0.20   (Not worth pursuing. Explains under 4% of return movement.)
+- investigate    |    0.20 <= r < 0.40  (Worth a closer look.)
+- go    |    r >= 0.40  (Strong enough to build on.)
 
 These thresholds are a business action bar, not a statistical convention. They are set before any results are seen. It answers how strong a correlation must be before a firm should look further into it. 
 
@@ -62,10 +62,7 @@ A lag shifts attention backward in time to line up against a later week's return
 
 ## Statistics
 
-| # | Title        | Type                     | Notes                        |
-|---|--------------|--------------------------|------------------------------|
-| 1 | Pearson r    | Histogram + box plot     |                              |
-| 2 | Spearman r   | Bar + std dev error bars |                              |
+Pearson r is the primary metric with Spearman r as a robustness check (a gap over 0.10 between the two is flagged). r squared is reported for intuition and p-values are deliberately not the headline, with eight tests chances produce 0.4 'significant' results, so effect size drives every decision not significance. 
 
 -------
 ## Charts
@@ -75,9 +72,9 @@ A lag shifts attention backward in time to line up against a later week's return
 
 | # | Title                     | Type                     | Notes                        |
 |---|---------------------------|--------------------------|------------------------------|
-| 1 | Time Series (All Stocks)  | Histogram + box plot     |                              |
-| 2 | Lag Correlation Chart     | Bar + std dev error bars |                              |
-| 3 | Proxy Comparison Chart    | Two-panel bar            |                              |
+| 1 | Time Series (All Stocks)  | Dual-axis line chart    | Search volume Vs. Weekly Return per stock. If search led price, spikes would precede return spikes.                            |
+| 2 | Lag Correlation Chart     | Line chart | Correlation by lag (0-4) for both proxies. If attention led price, a line would clear the 0.20 threshold at lag 1 or beyond |
+| 3 | Proxy Comparison Chart    | Bar chart           |                              |
 
 -------
 ## Outputs
