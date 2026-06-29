@@ -1,4 +1,5 @@
-# Correlation Analysis 
+# Does Online Attention Lead Stock Returns?
+*A Signal-Screening Analysis Using Google Trends and Wikipedia*
 **Overview**
 This project tests whether publicly available online attention (Google Trends search volume and Wikipedia page views) show a lead relationship with weekly stock returns for four large cap stocks (TSLA, NVDA, META, JPM) over a three year period (Jan 2022 to Dec 2024). Three independent data sources were cleaned, aligned to a weekly calendar, and tested at a pre-registered one week lag against a business action bar.
 
@@ -44,9 +45,13 @@ Note: Two lag two results crossed the 0.20 threshold (TSLA-Wiki -0.2413 and JPM-
 -------
 
 ## Stock Specific Notes
+
 **TSLA:** Common Elon Musk news driven spikes tend to produce same week co-movement rather than a one week lead. The confound is timing not the source of searches. 
+
 **NVDA:** Search volume and returns have been driven in part by the AI narrative, in cases this is a shared external drvier producing same week co-movements rather than a lead.
+
 **JPM:** The weak result is expected form an institutionally traded company and confirms the projects hypothesis.
+
 **META:** No single external noise source on the scale of its peers, so adding a comparable caveat would be unwarranted.
 
 -------
