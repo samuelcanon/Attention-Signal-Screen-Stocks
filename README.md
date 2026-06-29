@@ -90,7 +90,11 @@ Pearson r is the primary metric with Spearman r as a robustness check (a gap ove
 |---|---------------------------|----------------------|-------------------------------------------|
 | 1 | Time Series (All Stocks)  | Dual-axis line chart | Search volume Vs. Weekly Return per stock. If search led price, spikes would precede return spikes.                                           |
 | 2 | Lag Correlation Chart     | Line chart           | Correlation by lag (0-4) for both proxies. If attention led price, a line would clear the 0.20 threshold at lag 1 or beyond                   |
-| 3 | Proxy Comparison Chart    | Bar chart            | The two attention sources at lag 0. Wiki is 'stronger' than Trends for three of four stocks, but stronger means less week and neither source clear the threshold                                                                                |
+| 3 | Proxy Comparison Chart    | Bar chart            | The two attention sources at lag 0. Wiki is 'stronger' than Trends for three of four stocks, but stronger means less week and neither source clear the threshold        
+
+![Correlation by lag](Chart/lag_correlation_chart.png)
+![Time series](Charts/time_series_all_stocks.png)
+![Proxy comparison](Charts/proxy_comparison_chart.png)|
 
 -------
 ## Outputs
