@@ -6,7 +6,7 @@ The result is a clean null. None of the eight tests (4 stocks x 2 attention sour
 
 This is a correlation and lag analysis study.
 
-Live Dashboard: **search-trends-vs-stock-returns.streamlit.app**
+Live Dashboard: [**search-trends-vs-stock-returns.streamlit.app**](https://search-trends-vs-stock-returns.streamlit.app/)
 
 -------
 
