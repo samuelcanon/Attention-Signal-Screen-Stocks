@@ -1,9 +1,12 @@
 # Correlation Analysis 
 **Overview**
+This project tests whether publicly available online attention (Google Trends search volume and Wikipedia page views) show a lead relationship with weekly stock returns for four large cap stocks (TSLA, NVDA, META, JPM) over a three year period (Jan 2022 to Dec 2024). Three independent data sources were cleaned, aligned to a weekly calendar, and tested at a pre-registered one week lag against a business action bar.
 
-**Data Notes**
+The result is a clean null. None of the eight tests (4 stocks x 2 attention sources) showed a correlation strong enough to act on. The available data did not reliably precede price movement for these stocks in this period. 
 
-Live Dashboard: https://vhvxeyh7ytfk3spmpzdwej.streamlit.app/
+This is a correlation and lag analysis study.
+
+Live Dashboard: **search-trends-vs-stock-returns.streamlit.app**
 
 -------
 
