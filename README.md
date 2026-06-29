@@ -1,5 +1,6 @@
 # Does Online Attention Lead Stock Returns?
 *A Signal-Screening Analysis Using Google Trends and Wikipedia*
+
 **Overview**
 This project tests whether publicly available online attention (Google Trends search volume and Wikipedia page views) show a lead relationship with weekly stock returns for four large cap stocks (TSLA, NVDA, META, JPM) over a three year period (Jan 2022 to Dec 2024). Three independent data sources were cleaned, aligned to a weekly calendar, and tested at a pre-registered one week lag against a business action bar.
 
