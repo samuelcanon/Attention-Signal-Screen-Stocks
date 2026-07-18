@@ -38,6 +38,7 @@ The largest observed relationship explained approximately 2.6% of weekly return 
 **Recommendation:** do not invest in developing an attention based signal for these stocks. The results provide no evidence that such a signal would be reliable.
 
 <br>
+
 -------
 
 ## Pre-Registered Analysis Criteria
