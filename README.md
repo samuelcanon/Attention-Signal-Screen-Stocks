@@ -1,6 +1,6 @@
 # Eight Tests, Eight No-Gos: Screening Online Attention as a Stock Signal
 
-**Recommendation: don't proceed with signal development.** Google Trends and Wikipedia page views show no lead relationship with weekly returns strong enough to act on, for any of four stocks, on either data source, at the pre-registered lag.
+**Recommendation: Do not proceed with a trading signal.** The analysis found no strong evidence that Google Trends or Wikipedia page views showed a lead relationship with weekly returns for any of the four stocks. This held across both datasets using the specified lag, suggesting that neither source provides a reliable signal.
 
 ***Stack: Python · pandas · scipy · Plotly · Streamlit***
 
@@ -15,15 +15,15 @@ The screening logic runs live. Narrows the date range and every correlation reco
 
 ## Research Question
 
-An investment advisory firm is considering building a tool around online attention data. Before committing budget, they want one thing answered: **is there a signal here worth chasing?**
+An investment advisory firm is considering building a tool around online attention data. Before committing budget they want to know if **is there a signal here worth chasing?**
 
 ## Conclusion
 
-Eight tests. Four stocks (TSLA, NVDA, META, JPM) × two independent attention sources, tested over three years of weekly data (Jan 2022 – Dec 2024).
+Eight tests, four stocks (TSLA, NVDA, META, JPM) × two independent attention sources, tested over three years of weekly data (Jan 2022 to Dec 2024).
 
 **All eight came back no-go.**
 
-| Stock | Google Trends (lag 1) | Wikipedia (lag 1) |
+| Stock | Google Trends (lag 1) | Wiki (lag 1) |
 |--------|----------------------|-------------------|
 | TSLA | +0.0153 | −0.1343 |
 | NVDA | −0.0015 | +0.0480 |
@@ -32,7 +32,7 @@ Eight tests. Four stocks (TSLA, NVDA, META, JPM) × two independent attention so
 
 The largest observed relationship explained approximately 2.6% of weekly return variation, while the smallest explained approximately 0.0002%.
 
-**Recommendation:** do not invest in developing an attention-based signal for these stocks. The results provide no evidence that such a signal would be reliable.
+**Recommendation:** do not invest in developing an attention based signal for these stocks. The results provide no evidence that such a signal would be reliable.
 
 -------
 
@@ -42,15 +42,15 @@ Before any data was pulled, a business action bar was fixed:
 
 | Tier | Threshold | Meaning |
 |------|-----------|---------|
-| **no-go** | \|r\| < 0.20 | Explains under 4% of movement, which is not worth pursuing. |
-| **investigate** | 0.20 ≤ \|r\| < 0.40 | Worth a closer look. |
-| **go** | \|r\| ≥ 0.40 | Strong enough to build on. |
+| **no-go** | r < 0.20 | Explains under 4% of movement, which is not worth pursuing. |
+| **investigate** | 0.20 ≤ r < 0.40 | Worth a closer look. |
+| **go** | r ≥ 0.40 | Strong enough to build on. |
 
-**A one-week lag was locked as the primary test before any results were seen.**
+**A one week lag (last week's attention tested against this week's return) was locked as the primary test before any results were seen.**
 
-This  matters as scanning all lags and reporting the best is data dredging. Noise in enough lags will eventually clear any bar. Committing to lag 1 in advance means the reported result is the one that was asked for, not the one that happened to look good.
+This matters because checking every possible lag and keeping the best result introduces data dredging. If enough lags are tested, some correlations will appear stronger purely by chance. Pre-selecting lag 1 avoids this problem and keeps the analysis focused on the original research question. Of the 40 correlations tested, only two exceeded 0.20, and both occurred at unregistered lags with opposite signs. This is exactly the type of pattern expected from random variation alone (40 × 0.05 = 2), supporting fixing the lag before testing.
 
-These thresholds are a *business* action bar, not a statistical convention. They answer a practical question: how strong must a correlation be before a firm should spend money on it?
+These thresholds are a *business* action bar, not a statistical convention. They answer the practical question of how strong must a correlation be before a firm should spend money on it?
 
 ## Assessing Whether the Sample Size Was Sufficient
 
@@ -58,67 +58,61 @@ The standard objection to any null result falls in the lack of findings due to i
 
 - At n = 154 lag-1 pairs, the smallest correlation reaching statistical significance is **r ≈ 0.158** while the pre-registered threshold is **r = 0.20**.
 
+***Note: The 155-week dataset loses one more row to the one-week shift*** 
+
 **Any correlation strong enough to act on would have been detected.** The null reflects an absent signal, not an insufficient sample.
 
-## Two Independent Sources, Same Answer
+## Two Sources with The Same Answer
 
-Two attention proxies were used deliberately, measuring different behaviours:
+Two attention proxies were used to measure different behaviours:
 
-- **Google Trends** — active search intent. Someone typed the ticker.
-- **Wikipedia page views** — passive consumption. Someone read about the company.
+- **Google Trends** is an active search intent, ex. someone typed the ticker.
+- **Wikipedia page views** showcases passive consumption, ex. someone reading about the company.
 
-Both land inside the no-go band for all four stocks. **The null is robust across two independent measures of attention** — a single-source null could be a quirk of that source. This one isn't.
+Both measures fall within the no-go band for all four stocks. Using two independent attention proxies improves robustness, as a null result from a single source could be driven by that specific source's characteristics rather than the underlying relationship.
 
 -------
 
 ## Stock Specific Notes
 
-**TSLA:** Common Elon Musk news driven spikes tend to produce same week co-movement rather than a one week lead. The confound is timing not the source of searches. 
+**TSLA:** Common Elon Musk news spikes tend to produce same week co-movement rather than a one week lead.
 
-**NVDA:** Search volume and returns have been driven in part by the AI narrative, in cases this is a shared external drvier producing same week co-movements rather than a lead.
+**NVDA:** Search volume and returns have been driven in part by the AI narrative, in cases this is a shared external driver producing same week co-movements rather than a lead.
 
-**JPM:** The weak result is expected form an institutionally traded company and confirms the projects hypothesis.
+**JPM:** The weak result is expected from an institutionally traded company as intended.
 
-**META:** No single external noise source on the scale of its peers, so adding a comparable caveat would be unwarranted.
+**META:** No single external noise source similar to the other stocks, so adding a note would be unwarranted.
 
 -------
 
 ## Methodology
 **Three Independent Data Sources**
-1. Yahoo Finance (yfinance): Daily closing price, auto-adjusted for splits and dividendss
-2. Google Trends (pytrends): Invididuals actively searching. A 0-100 weekly relative interest index.
+1. Yahoo Finance (yfinance): Daily closing price, auto-adjusted for splits and dividends
+2. Google Trends (pytrends): Individuals actively searching. A 0-100 weekly relative interest index.
 3. Wikipedia Page Views (Wiki REST API): Individual's passive attention.
 
 Note: Two attention sources are used deliberately to gain a more complete and credible result than a single source provides.
 
 **Alignment**
 
-All sources were placed on one weekly Friday anchored calendar (Friday close for prices, summed weekly totals for Wiki Views, re-anchored weekly values for Trends) and combined with an inner join. One trailing partial week was dropped. Final dataset: 155 weeks (0.6% observations lost in the join).
+All sources were placed on one weekly Friday-anchored calendar (Friday close for prices, summed weekly totals for Wiki views, Sunday-anchored Trends values resampled to Friday) and combined with an inner join. The join kept 156 weeks (0.6% of observations lost). Converting prices to weekly returns drops the first week, as it has no prior week to compare against, making the final dataset 155 weeks.
 
 **Returns (Not Prices)**
 
-Stock prices were converted to weekly percent returns before any correlation. Raw prices trend upwards and two upward trending series look correlated even when unrelated, reflecting spurious correlation. Returns strip the trend and isolate genuine week to week movement.
-
-**Pre-Registered Lag 1 Test**
-
-A lag shifts attention backward in time to line up against a later week's return. Lag 1 was locked as the primary test before results were seen. This prevents data dredging (reporting the best one, manufactures findings from noise). Lag 0-4 are computed and shown for exploratory context.
-
--------
+Stock prices were converted into weekly percentage returns before calculating correlations. Using raw prices can be misleading because most stocks trend upward over time, which can make unrelated stocks appear correlated. Converting prices into returns removes this trend and focuses on how stocks move from week to week.
 
 ## Statistics
 
-Pearson r is the primary metric with Spearman r as a robustness check (a gap over 0.10 between the two is flagged). r squared is reported for intuition and p-values are deliberately not the headline, with eight tests chances produce 0.4 'significant' results, so effect size drives every decision not significance. 
+Pearson’s r is used as the main correlation measure, with Spearman’s r included as a robustness check. A difference of more than 0.10 between the two measures is treated as a potential concern. R² is reported to help interpret the strength of relationships. P-values are not the main focus because, with eight tests, some statistically significant results could occur by chance. Decisions are therefore based primarily on the size and consistency of the effects.
 
 -------
 ## Charts
 
 | # | Title                     | Type                 | Notes                                     |
 |---|---------------------------|----------------------|-------------------------------------------|
-| 1 | Time Series (All Stocks)  | Dual-axis line chart | Search volume Vs. Weekly Return per stock. If search led price, spikes would precede return spikes.                                           |
-| 2 | Lag Correlation Chart     | Line chart           | Correlation by lag (0-4) for both proxies. If attention led price, a line would clear the 0.20 threshold at lag 1 or beyond                   |
-| 3 | Proxy Comparison Chart    | Bar chart            | The two attention sources at lag 0. Wiki is 'stronger' than Trends for three of four stocks, but stronger means less week and neither source clear the threshold        
-
-
+| 1 | Time Series (All Stocks)  | Dual-axis line chart | Search volume Vs. Weekly Return per stock.|
+| 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0–4). Lag 1 was the pre-specified test; the remaining lags are shown only for exploratory purposes.|
+| 3 | Proxy Comparison Chart    | Bar chart            |  Both sources at lag 0. The null holds across two independent measures as all eight bars sit inside the ±0.20 band.       
 
 
 ![Correlation by lag](Charts/lag_correlation_chart.png)
@@ -144,7 +138,7 @@ Pre-run outputs are in /outputs so you can review result without running the not
 ## How to Run
 **Notebook**
 
-Open notebook.ipynb in Google Colab or Jupyter and run top to bottom. The data-collection cells call live APIs (Google Trends, Yahoo Finance, Wikimedia), these can be rate-limited, so the raw pulls are saved to CSV and treated as canonical. Use the dataset provided in this project to ensure consistency and reproducibility, as Google Trends normalized index values which can very slightly between API calls.
+The raw pulls are committed to /data. Section 2 (live API collection) documents how the data was gathered but it should be skipped as data is canonical. Section 3 is the starting point as it reads the committed CSVs. Google Trends returns a normalized index that varies between calls so re-pulling will not reproduce these exact numbers.
 
 **Dashboard**
 
@@ -161,8 +155,8 @@ Place data_aligned.csv and findings.csv in the same folder as dashboard.py. The 
 - Weekly Granularity: A daily analysis might reveal a faster structure that a weekly view averages away. 
 - One Three Year Window: A different time period could have behaved differently.
 - No Macro Controls: Overall market moves, sector rotation, and volatility regime are not controlled for.
-- Lag 2: Needs a pre-specified holdout period before it could be treated as real.
-- Public Data Priced In: Any genuine signal in freeling available attention data is plausibly reflected in the price already, a reason to expect a null. 
+- Lag 2: Since lag 2 was not pre-specified, these results would need holdout confirmation and are not used in recommendations.
+- Public Data Priced In: Any genuine signal in freely available attention data is plausibly reflected in the price already, a reason to expect a null. 
 -------
 
 ## Disclaimer 
