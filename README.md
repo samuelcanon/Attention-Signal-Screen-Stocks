@@ -36,6 +36,7 @@ The largest observed relationship explained approximately 2.6% of weekly return 
 *If search activity led prices, search spikes should come before return spikes. They do not.*
 
 **Recommendation:** do not invest in developing an attention based signal for these stocks. The results provide no evidence that such a signal would be reliable.
+
 <br>
 -------
 
