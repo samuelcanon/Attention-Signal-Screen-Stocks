@@ -58,6 +58,8 @@ These thresholds are a *business* action bar, not a statistical convention. They
 ![Correlation by lag](Charts/lag_correlation_chart.png)
 *All five lags remain below the 0.20 threshold, including the pre-registered lag 1.*
 
+<br>
+
 ## Assessing Whether the Sample Size Was Sufficient
 
 The standard objection to any null result falls in the lack of findings due to insufficient sample size. The numbers prove otherwise.
