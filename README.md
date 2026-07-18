@@ -1,4 +1,4 @@
-# Does Online Attention Lead Stock Returns?
+# Eight Tests, Eight No-Gos: Screening Online Attention as a Stock Signal
 *A Signal-Screening Analysis Using Google Trends and Wikipedia*
 
 ***Stack: Python · pandas · scipy · Plotly · Streamlit***
