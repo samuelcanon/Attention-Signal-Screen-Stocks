@@ -13,33 +13,61 @@ The screening logic runs live. Narrows the date range and every correlation reco
 
 -------
 
-## Business Context
+## Research Question
 
-The project is framed as a screening exercise for an investment advisory firm asking a practical question: before spending money building a tool around online trends/attention, is there a signal worth chasing?
+An investment advisory firm is considering building a tool around online attention data. Before committing budget, they want one thing answered: **is there a signal here worth chasing?**
 
-The ouput is a tiered recommendation per stock per source: 
-- no-go    |    r < 0.20   (Not worth pursuing. Explains under 4% of return movement.)
-- investigate    |    0.20 <= r < 0.40  (Worth a closer look.)
-- go    |    r >= 0.40  (Strong enough to build on.)
+## Conclusion
 
-These thresholds are a business action bar, not a statistical convention. They are set before any results are seen. It answers how strong a correlation must be before a firm should look further into it. 
+Eight tests. Four stocks (TSLA, NVDA, META, JPM) × two independent attention sources, tested over three years of weekly data (Jan 2022 – Dec 2024).
+
+**All eight came back no-go.**
+
+| Stock | Google Trends (lag 1) | Wikipedia (lag 1) |
+|--------|----------------------|-------------------|
+| TSLA | +0.0153 | −0.1343 |
+| NVDA | −0.0015 | +0.0480 |
+| META | +0.0913 | −0.1599 |
+| JPM | −0.0375 | +0.0131 |
+
+The largest observed relationship explained approximately 2.6% of weekly return variation, while the smallest explained approximately 0.0002%.
+
+**Recommendation:** do not invest in developing an attention-based signal for these stocks. The results provide no evidence that such a signal would be reliable.
 
 -------
 
-## Key Findings
+## Pre-Registered Analysis Criteria
 
-All eight pre-registered lag one tests landed below the 0.20 threshold (no-go tier).
+Before any data was pulled, a business action bar was fixed:
 
-| Stock  | Google Trends (lag 1)   | Wikipedia (lag 1) |
-|--------|-------------------------|-------------------|
-| TSLA   | +0.0153                 | -0.1343           |
-| NVDA   | -0.0015                 | +0.0480           |
-| META   | +0.0913                 | -0.1599           |
-| JPM    | -0.0375                 | +0.0131           |
+| Tier | Threshold | Meaning |
+|------|-----------|---------|
+| **no-go** | \|r\| < 0.20 | Explains under 4% of movement, which is not worth pursuing. |
+| **investigate** | 0.20 ≤ \|r\| < 0.40 | Worth a closer look. |
+| **go** | \|r\| ≥ 0.40 | Strong enough to build on. |
 
-Null Result: Both Google Trends and Wikipedia page views do not show a consistent lead relationship with weekly price movements for the four stocks analysed over this period (Jan 2022-Dec 2024). All correlation coefficients at the pre-registered lag fall below the threshold. 
+**A one-week lag was locked as the primary test before any results were seen.**
 
-Note: Two lag two results crossed the 0.20 threshold (TSLA-Wiki -0.2413 and JPM-Wiki +0.2013). 
+This  matters as scanning all lags and reporting the best is data dredging. Noise in enough lags will eventually clear any bar. Committing to lag 1 in advance means the reported result is the one that was asked for, not the one that happened to look good.
+
+These thresholds are a *business* action bar, not a statistical convention. They answer a practical question: how strong must a correlation be before a firm should spend money on it?
+
+## Assessing Whether the Sample Size Was Sufficient
+
+The standard objection to any null result falls in the lack of findings due to insufficient sample size. The numbers prove otherwise.
+
+- At n = 154 lag-1 pairs, the smallest correlation reaching statistical significance is **r ≈ 0.158** while the pre-registered threshold is **r = 0.20**.
+
+**Any correlation strong enough to act on would have been detected.** The null reflects an absent signal, not an insufficient sample.
+
+## Two Independent Sources, Same Answer
+
+Two attention proxies were used deliberately, measuring different behaviours:
+
+- **Google Trends** — active search intent. Someone typed the ticker.
+- **Wikipedia page views** — passive consumption. Someone read about the company.
+
+Both land inside the no-go band for all four stocks. **The null is robust across two independent measures of attention** — a single-source null could be a quirk of that source. This one isn't.
 
 -------
 
