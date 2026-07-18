@@ -32,6 +32,9 @@ Eight tests, four stocks (TSLA, NVDA, META, JPM) × two independent attention so
 
 The largest observed relationship explained approximately 2.6% of weekly return variation, while the smallest explained approximately 0.0002%.
 
+![Time series](Charts/time_series_all_stocks.png)
+*If search activity led prices, search spikes should come before return spikes. They do not.*
+
 **Recommendation:** do not invest in developing an attention based signal for these stocks. The results provide no evidence that such a signal would be reliable.
 
 -------
@@ -52,6 +55,9 @@ This matters because checking every possible lag and keeping the best result int
 
 These thresholds are a *business* action bar, not a statistical convention. They answer the practical question of how strong must a correlation be before a firm should spend money on it?
 
+![Correlation by lag](Charts/lag_correlation_chart.png)
+*All five lags remain below the 0.20 threshold, including the pre-registered lag 1.*
+
 ## Assessing Whether the Sample Size Was Sufficient
 
 The standard objection to any null result falls in the lack of findings due to insufficient sample size. The numbers prove otherwise.
@@ -70,6 +76,9 @@ Two attention proxies were used to measure different behaviours:
 - **Wikipedia page views** showcases passive consumption, ex. someone reading about the company.
 
 Both measures fall within the no-go band for all four stocks. Using two independent attention proxies improves robustness, as a null result from a single source could be driven by that specific source's characteristics rather than the underlying relationship.
+
+![Proxy comparison](Charts/proxy_comparison_chart.png
+*All eight bars fall within the ±0.20 range; neither proxy exceeds the threshold.*
 
 -------
 
@@ -113,15 +122,6 @@ Pearson’s r is used as the main correlation measure, with Spearman’s r inclu
 | 1 | Time Series (All Stocks)  | Dual-axis line chart | Search volume Vs. Weekly Return per stock.|
 | 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0–4). Lag 1 was the pre-specified test; the remaining lags are shown only for exploratory purposes.|
 | 3 | Proxy Comparison Chart    | Bar chart            |  Both sources at lag 0. The null holds across two independent measures as all eight bars sit inside the ±0.20 band.       
-
-
-![Correlation by lag](Charts/lag_correlation_chart.png)
-
-
-![Time series](Charts/time_series_all_stocks.png)
-
-
-![Proxy comparison](Charts/proxy_comparison_chart.png)
 
 -------
 ## Outputs
