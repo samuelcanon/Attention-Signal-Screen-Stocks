@@ -1,19 +1,15 @@
 # Eight Tests, Eight No-Gos: Screening Online Attention as a Stock Signal
-*A Signal-Screening Analysis Using Google Trends and Wikipedia*
+
+**Recommendation: don't proceed with signal development.** Google Trends and Wikipedia page views show no lead relationship with weekly returns strong enough to act on, for any of four stocks, on either data source, at the pre-registered lag.
 
 ***Stack: Python · pandas · scipy · Plotly · Streamlit***
-
-**Overview**
-This project tests whether publicly available online attention (Google Trends search volume and Wikipedia page views) show a lead relationship with weekly stock returns for four large cap stocks (TSLA, NVDA, META, JPM) over a three year period (Jan 2022 to Dec 2024). Three independent data sources were cleaned, aligned to a weekly calendar, and tested at a pre-registered one week lag against a business action bar.
-
-The result is a clean null. None of the eight tests (4 stocks x 2 attention sources) showed a correlation strong enough to act on. The available data did not reliably precede price movement for these stocks in this period. 
-
-This is a correlation and lag analysis study.
 
 **Live Interactive Dashboard:** 
 [**search-trends-vs-stock-returns.streamlit.app**](https://search-trends-vs-stock-returns.streamlit.app/)
 
 *Stock Selector | Data Filter | Live Correlation Recompute*
+
+The screening logic runs live. Narrows the date range and every correlation recomputes on the filtered window, with go/investigate/no-go recommendations updating per stock and per proxy.
 
 -------
 
