@@ -10,7 +10,7 @@ from pathlib import Path
 
 #Page Setup
 st.set_page_config(
-    page_title = "Search Trends vs. Stock Prices",
+    page_title = "Attention vs. Stock Returns",
     layout = "wide"
 )
 
