@@ -5,7 +5,7 @@
 ***Stack: Python · pandas · scipy · Plotly · Streamlit***
 
 **Live Interactive Dashboard:** 
-[**search-trends-vs-stock-returns.streamlit.app**](https://search-trends-vs-stock-returns.streamlit.app/)
+[**search-trends-vs-stock-returns.streamlit.app**](https://attention-vs-stock-returns.streamlit.app/)
 
 *Stock Selector | Data Filter | Live Correlation Recompute*
 
