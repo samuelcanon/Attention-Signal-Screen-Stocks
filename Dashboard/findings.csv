@@ -1,4 +1,4 @@
-ticker,proxy,primary_lag,primary_r,best_exploratory_lag,best_exploratory_r,rec
+ticker,proxy,primary_lag_weeks,primary_r,best_exploratory_lag,best_exploratory_r,recommendation
 TSLA,Google Trends,1,0.0153,4,0.1324,no-go
 NVDA,Google Trends,1,-0.0015,0,0.0996,no-go
 META,Google Trends,1,0.0913,2,0.1143,no-go
