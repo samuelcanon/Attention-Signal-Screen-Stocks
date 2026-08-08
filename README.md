@@ -1,6 +1,6 @@
 # Eight Tests, Eight No-Gos: Screening Online Attention as a Stock Signal
 
-**Recommendation: Do not proceed with a trading signal.** The analysis found no strong evidence that Google Trends or Wikipedia page views showed a lead relationship with weekly returns for any of the four stocks. This held across both datasets using the specified lag, suggesting that neither source provides a reliable signal.
+**Recommendation: Don't build a signal on this.** Across four stocks and two data sources, tested at the one-week delay and locked in before any results were seen, neither Google Trends nor Wikipedia views showed a meaningful link to next week's return.
 
 ***Stack: Python · pandas · scipy · Plotly · Streamlit***
 
@@ -9,7 +9,7 @@
 
 *Stock Selector | Data Filter | Live Correlation Recompute*
 
-The screening logic runs live. Narrows the date range and every correlation recomputes on the filtered window, with go/investigate/no-go recommendations updating per stock and per proxy.
+Narrow the date range to update the lag-correlation chart live so you can check whether the pattern holds on a shorter window.
 
 -------
 
@@ -35,7 +35,6 @@ The largest observed relationship explained approximately 2.6% of weekly return 
 ![Time series](Charts/time_series_all_stocks.png)
 *If search activity led prices, search spikes should come before return spikes. They do not.*
 
-**Recommendation:** do not invest in developing an attention based signal for these stocks. The results provide no evidence that such a signal would be reliable.
 
 <br>
 
@@ -53,20 +52,22 @@ Before any data was pulled, a business action bar was fixed:
 
 **A one week lag (last week's attention tested against this week's return) was locked as the primary test before any results were seen.**
 
-This matters because checking every possible lag and keeping the best result introduces data dredging. If enough lags are tested, some correlations will appear stronger purely by chance. Pre-selecting lag 1 avoids this problem and keeps the analysis focused on the original research question. Of the 40 correlations tested, only two exceeded 0.20, and both occurred at unregistered lags with opposite signs. This is exactly the type of pattern expected from random variation alone (40 × 0.05 = 2), supporting fixing the lag before testing.
+This matters because checking every possible lag and keeping the best result introduces data dredging.  eWith enough delayed tested some will look stronger purely by chance. Commiting to one week in advance avoids that trap and keepa the test honest. 
+
+Of the 40 correlations tested only two exceeded 0.20 (TSLA -0.2413 and JPM +0.2013), both on Wikipedia, both lag 2 and neither pre-registered. This is roughly the type of pattern expected by chance alone (40 × 0.05 = 2), supporting fixing the lag before testing.
 
 These thresholds are a *business* action bar, not a statistical convention. They answer the practical question of how strong must a correlation be before a firm should spend money on it?
 
 ![Correlation by lag](Charts/lag_correlation_chart.png)
-*All five lags remain below the 0.20 threshold, including the pre-registered lag 1.*
+*Most of the five lags remain below the 0.20 threshold, including the pre-registered lag 1.*
 
 <br>
 
 ## Assessing Whether the Sample Size Was Sufficient
 
-The standard objection to any null result falls in the lack of findings due to insufficient sample size. The numbers prove otherwise.
+The standard objection to a null result is that the sample was too small to detect anything. The numbers prove otherwise.
 
-- At n = 154 lag-1 pairs, the smallest correlation reaching statistical significance is **r ≈ 0.158** while the pre-registered threshold is **r = 0.20**.
+- With 154 weekly comparisons, the smallest relationship that could still show up as statistically real is **r ≈ 0.158**.
 
 ***Note: The 155-week dataset loses one more row to the one-week shift*** 
 
@@ -77,12 +78,13 @@ The standard objection to any null result falls in the lack of findings due to i
 Two attention proxies were used to measure different behaviours:
 
 - **Google Trends** is an active search intent, ex. someone typed the ticker.
-- **Wikipedia page views** showcases passive consumption, ex. someone reading about the company.
+- **Wikipedia page views** shows passive consumption, ex. someone reading about the company.
 
 Both measures fall within the no-go band for all four stocks. Using two independent attention proxies improves robustness, as a null result from a single source could be driven by that specific source's characteristics rather than the underlying relationship.
 
-![Proxy comparison](Charts/proxy_comparison_chart.png
-*All eight bars fall within the ±0.20 range; neither proxy exceeds the threshold.*
+![Proxy comparison](Charts/proxy_comparison_chart.png)
+
+*At lag 0, all eight bars fall within the ±0.20 range; neither proxy exceeds the threshold.*
 
 -------
 
@@ -92,7 +94,7 @@ Both measures fall within the no-go band for all four stocks. Using two independ
 
 **NVDA:** Search volume and returns have been driven in part by the AI narrative, in cases this is a shared external driver producing same week co-movements rather than a lead.
 
-**JPM:** The weak result is expected from an institutionally traded company as intended.
+**JPM:** The weak result is expected from an institutionally traded company. Chosen as a deliberate contrast. 
 
 **META:** No single external noise source similar to the other stocks, so adding a note would be unwarranted.
 
@@ -102,13 +104,23 @@ Both measures fall within the no-go band for all four stocks. Using two independ
 **Three Independent Data Sources**
 1. Yahoo Finance (yfinance): Daily closing price, auto-adjusted for splits and dividends
 2. Google Trends (pytrends): Individuals actively searching. A 0-100 weekly relative interest index.
-3. Wikipedia Page Views (Wiki REST API): Individual's passive attention.
+3. Wikipedia Page Views (Wiki REST API): Daily article views, a passive attention measure.
 
 Note: Two attention sources are used deliberately to gain a more complete and credible result than a single source provides.
 
-**Alignment**
+**Alignment: Getting Three Calendars to Agree**
 
-All sources were placed on one weekly Friday-anchored calendar (Friday close for prices, summed weekly totals for Wiki views, Sunday-anchored Trends values resampled to Friday) and combined with an inner join. The join kept 156 weeks (0.6% of observations lost). Converting prices to weekly returns drops the first week, as it has no prior week to compare against, making the final dataset 155 weeks.
+All three sources were aligned to a single Friday-anchored weekly calendar, with checks confirming that no weeks were silently lost or duplicated.
+
+*The Problem:* The three sources use different calendars. Stock prices only exist on trading days, Wikipedia reports daily counts, and Google Trends reports Sunday to Saturday weeks.
+
+*The fix:* Everything was put onto the same Friday anchored weekly calendar. Friday’s closing price represents the trading week, Wikipedia’s daily counts were summed, and Google Trends’ Sunday-start weeks were shifted onto the Friday calendar.
+
+*The Result:* All three sources initially lined up across 157 weeks. One trailing partial week was then removed because it only contained two trading days and four Wikipedia days. Then 155 remained once the first week was used to calculate the first return. In total, 0.6% of the data was excluded.
+
+*Extra Checks:* Ticker searches were also compared with full company name searches. TSLA and JPM produced materially different signals (r = 0.731 and 0.652), supporting the use of tickers as a more investor specific measure.
+
+Wikipedia series were screened for unusually large spikes (days above ten times the median). NVDA had four such spikes, on the 22–23 of Feb, 6 of June, and 19 of June 2024. These coincided with an earnings report and the June 2024 ten for one stock split. They were kept rather than treated as noise.
 
 **Returns (Not Prices)**
 
@@ -116,7 +128,7 @@ Stock prices were converted into weekly percentage returns before calculating co
 
 ## Statistics
 
-Pearson’s r is used as the main correlation measure, with Spearman’s r included as a robustness check. A difference of more than 0.10 between the two measures is treated as a potential concern. R² is reported to help interpret the strength of relationships. P-values are not the main focus because, with eight tests, some statistically significant results could occur by chance. Decisions are therefore based primarily on the size and consistency of the effects.
+Pearson’s r is the main correlation measure, with Spearman’s r as a robustness check. A difference of more than 0.10 between the two measures is treated as a potential concern. R² is reported to help interpret the strength of relationships. P-values are not the main focus because, with eight tests, some statistically significant results could occur by chance. Decisions are therefore based primarily on the size and consistency of the effects.
 
 -------
 ## Charts
@@ -142,7 +154,7 @@ Pre-run outputs are in /outputs so you can review result without running the not
 ## How to Run
 **Notebook**
 
-The raw pulls are committed to /data. Section 2 (live API collection) documents how the data was gathered but it should be skipped as data is canonical. Section 3 is the starting point as it reads the committed CSVs. Google Trends returns a normalized index that varies between calls so re-pulling will not reproduce these exact numbers.
+The raw pulls are committed to /Data. Section 2 (live API collection) documents how the data was gathered but it should be skipped as data is canonical. Section 3 is the starting point as it reads the committed CSVs. Google Trends returns a normalized index that varies between calls so re-pulling will not reproduce these exact numbers.
 
 **Dashboard**
 
@@ -150,17 +162,26 @@ Runs locally with no live API calls (it reads the pre-exported CSVs):
 - pip install -r requirements.txt
 - streamlit run dashboard.py
 
-Place data_aligned.csv and findings.csv in the same folder as dashboard.py. The dashboard recomputes correlations based on the selected date range, so narrowing the range may change the displayed values.
+Place data_aligned.csv and findings.csv in the same folder as dashboard.py. Narrowing the date range in the sidebar updates the lag-correlation chart live. The metric cards, summary table and recommendation text reflect the full three-year study and do not change with the date filter.
+
+-------
+
+## Whats Next?
+
+- *Attention changes not attention levels:* Re-running tests on week over week attention changes against a trailing mean to test whether sudden chnages in attention, rather than attention levels, predicts returns. 
+- *Holdout test of lag 2:* Pre-register lag 2 on a fresh 2025 and onward window and test whether the TSLA and JPM Wikipedia results that passed the threshold survive out of sample.
+- *Finer granularity:* Testing daily or intraday data to see whether a signal exists but is simply too short lived for a weekly analysis to capture. 
 
 -------
 
 ## Limitations
 
-- Weekly Granularity: A daily analysis might reveal a faster structure that a weekly view averages away. 
 - One Three Year Window: A different time period could have behaved differently.
 - No Macro Controls: Overall market moves, sector rotation, and volatility regime are not controlled for.
-- Lag 2: Since lag 2 was not pre-specified, these results would need holdout confirmation and are not used in recommendations.
 - Public Data Priced In: Any genuine signal in freely available attention data is plausibly reflected in the price already, a reason to expect a null. 
+- Weekly Granularity: A daily analysis might reveal a faster structure that a weekly view averages away. 
+- Lag 2: Since lag 2 was not pre-specified, these results would need holdout confirmation and are not used in recommendations.
+
 -------
 
 ## Disclaimer 

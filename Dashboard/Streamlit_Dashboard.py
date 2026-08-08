@@ -51,21 +51,20 @@ date_range = st.sidebar.date_input(
 )
 
 selected_proxy = st.sidebar.selectbox(
-    "Attention Proxy",
+    "Attention Source",
     options = ['Google Trends', 'Wikipedia', 'Both'],
     index = 2,
-    help = "Select which attention proxy to display."
+    help = "Choose which online attention source to show: Google search interest, Wikipedia reading, or both."
 )
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
 About this dashboard: 
 
-Signal screening analysis for advisory use case.
-Output: go, investigate, no-go per stock per proxy.
+Each stock gets a simple call: go, worth a look, or no-go.
 
-Data: Jan '22 to Dec '24. Pre-exported CSVs. 
-No live API calls. This is not investment advice.
+Data covers January 2022 to December 2024, loaded from a fixed and saved dataset.
+Not a live feed.
 """)
 
 #Data Filter by data range
@@ -80,9 +79,9 @@ else:
 st.title("Attention vs. Stock Returns")
 st.subheader("Eight tests, four stocks, two attention sources")
 st.markdown("""
-Preliminary signal screening analysis. Output: go, investigate, no-go per stock.
-Narrow the date range in the sidebar and every correlation recomputes live.
-*Illustrative business context only. Not investment advice.*
+A first look at whether online attention predicts next week's stock return, tested against a bar set in advance.
+Narrowing the date range in the sidebar updates the chart below live. The top numbers and table reflect the full three-year study.
+*Illustrative business context only.*
 \n*Use the sidebar on the left to switch between stocks and views.*
 """)
 
@@ -108,7 +107,8 @@ with col2:
         st.metric(
             label="Trends Lag 1 r",
             value=f"{r_val:+.3f}",
-            delta=rec.upper()
+            delta=rec.upper(),
+            delta_color="off"
         )
 
 with col3:
@@ -116,17 +116,18 @@ with col3:
         r_val = stock_findings_wiki['primary_r'].values[0]
         rec = stock_findings_wiki['recommendation'].values[0]
         st.metric(
-            label="Wikipedia Lag 1 r",
+            label="Trends Lag 1 r",
             value=f"{r_val:+.3f}",
-            delta=rec.upper()
+            delta=rec.upper(),
+            delta_color="off"
         )
 
 with col4:
     n_obs = len(df_filtered)
-    st.metric(label="Weekly Observations", value=n_obs)
+    st.metric(label="Weeks of Data", value=n_obs)
 
 #Chart 1: Dual Axis Time Series 
-st.subheader(f"Does {selected_stock} Search Volume Lead Weekly Returns?")
+st.subheader(f"Does {selected_stock} Search Interest Predict Next Week's Return??")
 
 trends_col = f"{selected_stock}_trends_lag0" 
 return_col = f"{selected_stock}_return"
@@ -178,7 +179,7 @@ if selected_proxy in ['Wikipedia', 'Both']:
 fig_ts.add_hline(y=0, line_dash="dash", line_color="black",
                   opacity=0.3, secondary_y=True)
 
-fig_ts.update_yaxes(title_text="Search Volume (0-100)", secondary_y=False)
+fig_ts.update_yaxes(title_text="Search Interest (0-100)", secondary_y=False)
 fig_ts.update_yaxes(title_text="Weekly Return (%)", secondary_y=True)
 fig_ts.update_layout(
     height=400,
@@ -196,9 +197,8 @@ st.plotly_chart(fig_ts, use_container_width=True)
 st.markdown("---")
 st.subheader("Lag Structure: Pre-registered vs. Exploratory")
 st.info("""
-Lag 1 is the pre-registered test, locked before analysis to ask whether last week's attention predicts 
-this week's return. Lags 0 and 2 to 4 are shown for context only as picking the best of the results after the 
-fact would be data dredging, the pre-registration exists to prevent this.
+The main test asks whether last week's attention predicts this week's return. Lags 0 and 2 to 4 are shown for context only as picking the best of the results after the 
+fact would make the results untrustworthy, the pre-registration at lag 1 exists to prevent this.
 """)
 
 
@@ -258,14 +258,14 @@ if selected_proxy in ['Wikipedia', 'Both']:
 
 ##Threshold Reference Line
 fig_lag.add_hline(y=0.20,line_dash="dot",line_color="green",
-    annotation_text="investigate threshold (r=0.20)", opacity=0.6)
+    annotation_text="worth a closer look (0.20)", opacity=0.6)
 fig_lag.add_hline(y=0.40, line_dash="dot",line_color="darkgreen",
-    annotation_text="go threshold (r=0.40)", opacity=0.6)
+    annotation_text="strong enough to act on (0.40)", opacity=0.6)
 fig_lag.add_hline(y=0, line_color="black", opacity=0.4)
 
 fig_lag.update_layout(
-    xaxis_title = "Lag (weeks): Positive = Search leads price",
-    yaxis_title = "Pearson r",
+    xaxis_title = "Weeks between search activity and return (0 = same week)",
+    yaxis_title = "Correlation strength (r)",
     height = 350,
     plot_bgcolor = "white",
     paper_bgcolor = "white"
@@ -275,18 +275,19 @@ fig_lag.update_yaxes(showgrid=True, gridcolor="lightgrey", range=[-0.6, 0.6])
 st.plotly_chart(fig_lag, use_container_width = True)
 
 #Summary Table 
-st.subheader("Correlation Summary (All Stocks)")
+st.subheader("How Every Stock Compares")
 ##Build Display Table from Findings
 summary_display = findings_df.copy()
-summary_display['r²'] = (summary_display['primary_r'] ** 2).round(4)
+summary_display['r²'] = (summary_display['primary_r'] ** 2 * 100).round(2)
 summary_display['primary_r'] = summary_display['primary_r'].round(4)
 summary_display = summary_display.rename(columns={
     'ticker': 'Stock',
-    'proxy': 'Proxy',
-    'primary_r': 'Primary r (lag 1)',
-    'r²': 'r²',
-    'primary_lag_weeks': 'Primary Lag (weeks)',
-    'best_exploratory_lag': 'Best Exploratory Lag',
+    'proxy': 'Attention Source',
+    'primary_r': 'Correlation (r)',
+    'r²': '% of Movement Explained',
+    'primary_lag_weeks': 'Delay Tested (weeks)',
+    'best_exploratory_lag': 'Strongest Delay Observed (weeks)',
+    'best_exploratory_r': 'Strongest r Observed',
     'recommendation': 'Recommendation'
 })
 
@@ -306,7 +307,7 @@ styled_table = summary_display.style.map(
 st.dataframe(styled_table, use_container_width=True)
 
 #Text Output (per selected stock)
-st.subheader(f"Analytical Conclusion: {selected_stock}")
+st.subheader(f"What This Means for {selected_stock}")
 
 conclusions = {}
 for ticker in ['TSLA', 'NVDA', 'META', 'JPM']:
@@ -318,15 +319,14 @@ for ticker in ['TSLA', 'NVDA', 'META', 'JPM']:
     w_rec = w_row['recommendation'].values[0] if not w_row.empty else 'no-go'
 
     if t_rec == 'no-go' and w_rec == 'no-go':
-        conclusion =  (f"{ticker}: No meaningful correlation found in either proxy "
-                      f"(Google Trends r = {t_r:+.3f}). No-go for both proxies.")
+        conclusion =  (f"{ticker}: Neither search interest nor Wikipedia reading predicts next week's "
+                      f"return (search match: {t_r:+.3f}). Recommendation: do not build a signal here.")
     elif t_rec in ('go', 'investigate'):
         conclusion = (f"{ticker}: {t_rec.capitalize()}. "
-                      f"Google Trends shows r = {t_r:+.3f} with search leading returns by "
-                      f"approximately {t_lag} week(s).")
+                      f"Search interest tracks returns {t_lag} week(s) ahead, at a match strength of {t_r:+.3f}.")
     else:
-        conclusion = (f"{ticker}: Wikipedia proxy warrants investigation "
-                      f"({w_rec}). Google Trends signal is weak.")
+        conclusion = (f"{ticker}: Wikipedia reading is worth a closer look "
+                      f"({w_rec}). Search interest alone is too weak to act on.")
 
     conclusions[ticker] = conclusion 
 
@@ -335,18 +335,18 @@ st.info(conclusions.get(selected_stock, "No conclusion available."))
 #Confound Caveat for Narrative Driven Stocks
 if selected_stock == 'TSLA':
     st.info("""
-    TSLA: Search spikes can be driven by Elon Musk's personal news,
-    which tend to produce same week co-movements, not a lag 1 lead relationship.
+    TSLA: Elon Musk's personal news often moves search and price in the same week. That is a
+    same week echo not search predicting price a week ahead.
     """)
 elif selected_stock == 'NVDA':
     st.info("""
-    NVDA: Some correlation may be attributed to a broader AI narrative cycle showing up in both
-    search trends and price movement, not a search leading price relationship.
+    NVDA: Search and price both move with the broader AI news cycle. They are not predicting the other but rather reacting to the
+    same events together.
     """)
 elif selected_stock == 'JPM':
     st.info("""
-    JPM: Weak correlation is expected as larger banks tend to move more on 
-    fundamentals than search interest.
+    JPM: A weak result here is expected. Large established banks tend to move on earnings and
+    rates.
     """)
 
 st.markdown("---")
