@@ -136,7 +136,7 @@ Pearson’s r is the main correlation measure, with Spearman’s r as a robustne
 | # | Title                     | Type                 | Notes                                     |
 |---|---------------------------|----------------------|-------------------------------------------|
 | 1 | Time Series (All Stocks)  | Dual-axis line chart | Search volume Vs. Weekly Return per stock.|
-| 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0–4). Lag 1 was the pre-specified test; the remaining lags are shown only for exploratory purposes.|
+| 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0-4). Lag 1 was the pre-specified test; the remaining lags are shown only for exploratory purposes.|
 | 3 | Proxy Comparison Chart    | Bar chart            |  Both sources at lag 0. The null holds across two independent measures as all eight bars sit inside the ±0.20 band.       
 
 -------
@@ -146,7 +146,7 @@ Pre-run outputs are in /outputs so you can review result without running the not
  
 | File                    | Contents                                               |
 |-------------------------|--------------------------------------------------------|
-| data_aligned.csv        | 155 week aligned dataset (Jan 2022–Dec 2024) per stock, weekly return, Google Trends volume, Wikipedia views, and lagged attention columns.               |
+| data_aligned.csv        | 155 week aligned dataset (Jan 2022-Dec 2024) per stock, weekly return, Google Trends volume, Wikipedia views, and lagged attention columns.               |
 | findings.csv            | 8 rows (4 stocks × 2 proxies) pre-registered lag-1 correlation, lags, and the go/investigate/no-go recommendation per test.                              |
 
 -------
