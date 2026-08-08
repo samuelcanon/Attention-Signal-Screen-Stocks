@@ -7,7 +7,7 @@
 **Live Interactive Dashboard:** 
 [**search-trends-vs-stock-returns.streamlit.app**](https://attention-vs-stock-returns.streamlit.app/)
 
-*Stock Selector | Data Filter | Live Correlation Recompute*
+*Stock Selector | Data Filter | Live Lag Chart*
 
 Narrow the date range to update the lag-correlation chart live so you can check whether the pattern holds on a shorter window.
 
@@ -15,11 +15,11 @@ Narrow the date range to update the lag-correlation chart live so you can check 
 
 ## Research Question
 
-An investment advisory firm is considering building a tool around online attention data. Before committing budget they want to know if **is there a signal here worth chasing?**
+An investment advisory firm is considering building a tool around online attention data. Before committing budget they want to know **if there a signal here worth chasing?**
 
 ## Conclusion
 
-Eight tests, four stocks (TSLA, NVDA, META, JPM) × two independent attention sources, tested over three years of weekly data (Jan 2022 to Dec 2024).
+Eight tests, four stocks (TSLA, NVDA, META, JPM) × two attention sources, tested over three years of weekly data (Jan 2022 to Dec 2024).
 
 **All eight came back no-go.**
 
@@ -46,15 +46,15 @@ Before any data was pulled, a business action bar was fixed:
 
 | Tier | Threshold | Meaning |
 |------|-----------|---------|
-| **no-go** | r < 0.20 | Explains under 4% of movement, which is not worth pursuing. |
-| **investigate** | 0.20 ≤ r < 0.40 | Worth a closer look. |
-| **go** | r ≥ 0.40 | Strong enough to build on. |
+| **no-go** | \|r\| < 0.20 | Explains under 4% of movement, which is not worth pursuing. |
+| **investigate** | 0.20 ≤ \|r\| < 0.40 | Worth a closer look. |
+| **go** | \|r\| ≥ 0.40 | Strong enough to build on. |
 
 **A one week lag (last week's attention tested against this week's return) was locked as the primary test before any results were seen.**
 
-This matters because checking every possible lag and keeping the best result introduces data dredging.  eWith enough delayed tested some will look stronger purely by chance. Commiting to one week in advance avoids that trap and keepa the test honest. 
+This matters because checking every possible lag and keeping the best result introduces data dredging. With enough delayed tested some will look stronger purely by chance. Commiting to one week in advance avoids that trap and keepa the test honest. 
 
-Of the 40 correlations tested only two exceeded 0.20 (TSLA -0.2413 and JPM +0.2013), both on Wikipedia, both lag 2 and neither pre-registered. This is roughly the type of pattern expected by chance alone (40 × 0.05 = 2), supporting fixing the lag before testing.
+Of the 40 correlations tested only two exceeded 0.20 (TSLA -0.2413 and JPM +0.2013), both on Wikipedia, both lag 2 and neither pre-registered, which is why they are not eligible. Two out of fourty is roughly what you can expect to see by chance alone. 
 
 These thresholds are a *business* action bar, not a statistical convention. They answer the practical question of how strong must a correlation be before a firm should spend money on it?
 
@@ -71,7 +71,7 @@ The standard objection to a null result is that the sample was too small to dete
 
 ***Note: The 155-week dataset loses one more row to the one-week shift*** 
 
-**Any correlation strong enough to act on would have been detected.** The null reflects an absent signal, not an insufficient sample.
+That means the sample was sensitive enough to detect effects smaller than the threshold that would actually trigger a decision. The weak results don’t suggest that the study was too small to detect an effect.
 
 ## Two Sources with The Same Answer
 
@@ -80,7 +80,7 @@ Two attention proxies were used to measure different behaviours:
 - **Google Trends** is an active search intent, ex. someone typed the ticker.
 - **Wikipedia page views** shows passive consumption, ex. someone reading about the company.
 
-Both measures fall within the no-go band for all four stocks. Using two independent attention proxies improves robustness, as a null result from a single source could be driven by that specific source's characteristics rather than the underlying relationship.
+Both measures fall within the no-go band for all four stocks.
 
 ![Proxy comparison](Charts/proxy_comparison_chart.png)
 
@@ -116,7 +116,7 @@ All three sources were aligned to a single Friday-anchored weekly calendar, with
 
 *The fix:* Everything was put onto the same Friday anchored weekly calendar. Friday’s closing price represents the trading week, Wikipedia’s daily counts were summed, and Google Trends’ Sunday-start weeks were shifted onto the Friday calendar.
 
-*The Result:* All three sources initially lined up across 157 weeks. One trailing partial week was then removed because it only contained two trading days and four Wikipedia days. Then 155 remained once the first week was used to calculate the first return. In total, 0.6% of the data was excluded.
+*The Result:* All three sources initially lined up across 157 weeks. One trailing partial week was then removed because it only contained two trading days and four Wikipedia days, leaving 156. Then 155 remained once the first week was used to calculate the first return.
 
 *Extra Checks:* Ticker searches were also compared with full company name searches. TSLA and JPM produced materially different signals (r = 0.731 and 0.652), supporting the use of tickers as a more investor specific measure.
 
@@ -136,8 +136,13 @@ Pearson’s r is the main correlation measure, with Spearman’s r as a robustne
 | # | Title                     | Type                 | Notes                                     |
 |---|---------------------------|----------------------|-------------------------------------------|
 | 1 | Time Series (All Stocks)  | Dual-axis line chart | Search volume Vs. Weekly Return per stock.|
+<<<<<<< HEAD
 | 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0-4). Lag 1 was the pre-specified test; the remaining lags are shown only for exploratory purposes.|
 | 3 | Proxy Comparison Chart    | Bar chart            |  Both sources at lag 0. The null holds across two independent measures as all eight bars sit inside the ±0.20 band.       
+=======
+| 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0–4). Lag 1 was the pre-specified test; the remaining lags are shown only for exploratory purposes.|
+| 3 | Proxy Comparison Chart    | Bar chart            |  Both sources at lag 0. The null holds across both measures as all eight bars sit inside the ±0.20 band.    
+>>>>>>> 0a4271b (Update Readme and Dashboard)
 
 -------
 ## Outputs

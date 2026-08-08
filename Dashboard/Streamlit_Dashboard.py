@@ -105,7 +105,7 @@ with col2:
         r_val = stock_findings_trends['primary_r'].values[0]
         rec = stock_findings_trends['recommendation'].values[0]
         st.metric(
-            label="Trends Lag 1 r",
+            label="Search Interest Match (r)",
             value=f"{r_val:+.3f}",
             delta=rec.upper(),
             delta_color="off"
@@ -116,7 +116,7 @@ with col3:
         r_val = stock_findings_wiki['primary_r'].values[0]
         rec = stock_findings_wiki['recommendation'].values[0]
         st.metric(
-            label="Trends Lag 1 r",
+            label="Wikipedia Reading Match (r)",
             value=f"{r_val:+.3f}",
             delta=rec.upper(),
             delta_color="off"
@@ -127,7 +127,7 @@ with col4:
     st.metric(label="Weeks of Data", value=n_obs)
 
 #Chart 1: Dual Axis Time Series 
-st.subheader(f"Does {selected_stock} Search Interest Predict Next Week's Return??")
+st.subheader(f"Does {selected_stock} Search Interest Predict Next Week's Return?")
 
 trends_col = f"{selected_stock}_trends_lag0" 
 return_col = f"{selected_stock}_return"
@@ -191,11 +191,11 @@ fig_ts.update_layout(
 fig_ts.update_xaxes(showgrid=True, gridcolor='lightgrey')
 fig_ts.update_yaxes(showgrid=True, gridcolor='lightgrey')
 
-st.plotly_chart(fig_ts, use_container_width=True)
+st.plotly_chart(fig_ts, use_container_width=True, theme=None)
 
 #Chart 2: Lag Correlation Chart 
 st.markdown("---")
-st.subheader("Lag Structure: Pre-registered vs. Exploratory")
+st.subheader("How Far Back Does Search Predict Price?")
 st.info("""
 The main test asks whether last week's attention predicts this week's return. Lags 0 and 2 to 4 are shown for context only as picking the best of the results after the 
 fact would make the results untrustworthy, the pre-registration at lag 1 exists to prevent this.
@@ -272,7 +272,7 @@ fig_lag.update_layout(
 )
 fig_lag.update_xaxes(tickvals=lags_list, showgrid=True, gridcolor="lightgrey")
 fig_lag.update_yaxes(showgrid=True, gridcolor="lightgrey", range=[-0.6, 0.6])
-st.plotly_chart(fig_lag, use_container_width = True)
+st.plotly_chart(fig_lag, use_container_width = True, theme=None)
 
 #Summary Table 
 st.subheader("How Every Stock Compares")
@@ -345,7 +345,7 @@ elif selected_stock == 'NVDA':
     """)
 elif selected_stock == 'JPM':
     st.info("""
-    JPM: A weak result here is expected. Large established banks tend to move on earnings and
+    JPM: A weak result here is expected. Large, established banks tend to move on earnings and
     rates.
     """)
 
