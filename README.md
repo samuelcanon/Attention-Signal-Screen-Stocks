@@ -140,7 +140,7 @@ Pearson’s r is the main correlation measure, with Spearman’s r as a robustne
 | 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0-4). Lag 1 was the pre-specified test; the remaining lags are shown only for exploratory purposes.|
 | 3 | Proxy Comparison Chart    | Bar chart            |  Both sources at lag 0. The null holds across two independent measures as all eight bars sit inside the ±0.20 band.       
 =======
-| 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0–4). Lag 1 was the pre-specified test; the remaining lags are shown only for exploratory purposes.|
+| 2 | Lag Correlation Chart     | Line chart           | Correlations by lag (0-4). Lag 1 was the pre-specified test, the remaining lags are shown only for exploratory purposes.|
 | 3 | Proxy Comparison Chart    | Bar chart            |  Both sources at lag 0. The null holds across both measures as all eight bars sit inside the ±0.20 band.    
 >>>>>>> 0a4271b (Update Readme and Dashboard)
 
